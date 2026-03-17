@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — V'Shield Security Service Sdn Bhd</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#151729;--navy2:#1C1F36;--gold:#D4A843;--gold2:#E8C76A;--red:#C0392B;--bg:#0D0F1E;--card:#171A30;--border:rgba(255,255,255,.08);--text:#E4E5EF;--dim:#868AAA;--muted:#555877;--ok:#34D399;--warn:#FBBF24;--r:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+
+/* Header */
+.header{background:var(--navy);border-bottom:1px solid var(--border);padding:20px 0}
+.header-inner{max-width:1000px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
+.logo-area{display:flex;align-items:center;gap:12px}
+.logo-box{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:var(--navy)}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;color:var(--gold)}
+.logo-text span{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.back-link{font-size:12px;color:var(--dim);transition:color .2s}.back-link:hover{color:var(--gold);text-decoration:none}
+
+/* Hero */
+.hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,var(--navy) 0%,var(--bg) 100%)}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);font-weight:800;color:var(--gold);margin-bottom:8px}
+.hero p{font-size:16px;color:var(--dim);max-width:550px;margin:0 auto}
+.hero-tag{display:inline-block;margin-top:16px;padding:6px 16px;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.2);border-radius:20px;font-size:12px;color:var(--gold);font-weight:600}
+
+/* Content */
+.content{max-width:800px;margin:0 auto;padding:0 20px 60px}
+
+/* Job Cards */
+.jobs-grid{display:flex;flex-direction:column;gap:14px;margin-top:30px}
+.job-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .2s;position:relative}
+.job-card:hover{border-color:rgba(212,168,67,.3);transform:translateY(-1px)}
+.job-card h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.job-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.job-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 10px;border-radius:6px;font-weight:600}
+.job-tag-location{background:rgba(96,165,250,.1);color:#60A5FA}
+.job-tag-type{background:rgba(167,139,250,.1);color:#A78BFA}
+.job-tag-shift{background:rgba(244,114,182,.1);color:#F472B6}
+.job-desc{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.job-reqs{font-size:12px;color:var(--muted);margin-bottom:16px}
+.job-reqs strong{color:var(--dim)}
+.apply-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 24px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);font-size:13px;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:all .2s;font-family:inherit}
+.apply-btn:hover{opacity:.9;transform:translateY(-1px)}
+.apply-btn svg{width:14px;height:14px}
+
+/* Apply Form */
+.apply-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.apply-form.open{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:3px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-textarea{min-height:60px;resize:vertical}
+.form-select{appearance:none;cursor:pointer}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.btn-cancel{padding:8px 16px;background:var(--navy2);color:var(--dim);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+.btn-submit{padding:8px 20px;background:var(--ok);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;transition:opacity .2s}
+.btn-submit:hover{opacity:.9}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.form-success{padding:14px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);border-radius:8px;color:var(--ok);font-size:13px;text-align:center;font-weight:600}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 20px}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:.3}
+.empty h3{font-size:18px;color:var(--dim);margin-bottom:4px}
+.empty p{font-size:13px;color:var(--muted)}
+
+/* Loading */
+.loading{text-align:center;padding:60px 20px}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Footer */
+.footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);margin-top:40px}
+.footer p{font-size:11px;color:var(--muted)}
+.footer a{color:var(--gold)}
+
+/* WhatsApp float */
+.wa-float{position:fixed;bottom:20px;right:20px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,211,102,.3);z-index:100;transition:transform .2s}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr}
+  .job-meta{gap:6px}
+  .hero{padding:40px 20px 30px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-box">V</div>
+      <div class="logo-text">
+        <h1>V'SHIELD SECURITY</h1>
+        <span>Your Line of Defence</span>
+      </div>
+    </div>
+    <a href="https://vshieldsecurity.com" class="back-link">← Back to Website</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h2>Join Our Team</h2>
+  <p>Be part of Malaysia's trusted security force. We're looking for dedicated professionals to protect what matters.</p>
+  <div class="hero-tag">KDN Licensed • Since 2009 • 15+ Years Experience</div>
+</section>
+
+<!-- Content -->
+<div class="content">
+  <div id="jobs-container">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p style="color:var(--dim);font-size:13px">Loading open positions...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>V'Shield Security Service Sdn Bhd (865070-T) | KDN.S.205/6422/1-2557</p>
+  <p style="margin-top:4px">No. 10-2, 10-3, Jalan Merpati, Taman Tanamera, 47630 Subang Jaya, Selangor</p>
+  <p style="margin-top:4px">Tel: 03-5101 9451 | Email: <a href="mailto:business.vshield@gmail.com">business.vshield@gmail.com</a> | <a href="https://vshieldsecurity.com">vshieldsecurity.com</a></p>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/60102361640?text=Hi%20V%27Shield%2C%20I%27m%20interested%20in%20a%20career%20opportunity" target="_blank" class="wa-float" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ============================================================
+// V'SHIELD CAREERS — Fetch active job postings from Supabase
+// ============================================================
+const SUPABASE_URL = 'https://nsbkdjbjsqsidrhetqac.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zYmtkamJqc3FzaWRyaGV0cWFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODQzNzQsImV4cCI6MjA4ODk2MDM3NH0.0uBrOze2_UJx4NZ51bfTrh71azenW689vGmay4wgDVk';
+
+async function loadJobs() {
+  const container = document.getElementById('jobs-container');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/job_postings?status=eq.active&order=created_at.desc`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+      }
+    });
+    const jobs = await res.json();
+
+    if (!jobs || jobs.length === 0) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">📋</div>
+          <h3>No Open Positions Right Now</h3>
+          <p>We're not actively hiring at the moment, but we're always looking for talented security professionals.</p>
+          <p style="margin-top:12px">Send your resume to <a href="mailto:business.vshield@gmail.com">business.vshield@gmail.com</a> or <a href="https://wa.me/60102361640">WhatsApp us</a>.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <h3 style="font-size:14px;font-weight:700;color:var(--dim)">${jobs.length} Open Position${jobs.length>1?'s':''}</h3>
+      </div>
+      <div class="jobs-grid" id="jobs-grid"></div>`;
+
+    const grid = document.getElementById('jobs-grid');
+    jobs.forEach((job, idx) => {
+      const card = document.createElement('div');
+      card.className = 'job-card';
+      card.id = `job-${idx}`;
+      
+      const typeLabel = job.guard_type === 'nepal' ? 'Nepali Guard' : job.guard_type === 'local' ? 'Local Guard' : 'Security Guard';
+      
+      card.innerHTML = `
+        <h3>${escHtml(job.title)}</h3>
+        <div class="job-meta">
+          ${job.location ? `<span class="job-tag job-tag-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${escHtml(job.location)}</span>` : ''}
+          <span class="job-tag job-tag-type">${typeLabel}</span>
+          ${job.shift_pattern ? `<span class="job-tag job-tag-shift">${escHtml(job.shift_pattern)}</span>` : ''}
+        </div>
+        ${job.description ? `<div class="job-desc">${escHtml(job.description)}</div>` : ''}
+        ${job.requirements ? `<div class="job-reqs"><strong>Requirements:</strong> ${escHtml(job.requirements)}</div>` : ''}
+        <button class="apply-btn" onclick="toggleForm(${idx})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Apply Now
+        </button>
+        <div class="apply-form" id="form-${idx}">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input class="form-input" id="name-${idx}" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input class="form-input" id="phone-${idx}" placeholder="e.g. 011-1234 5678" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">IC Number</label>
+              <input class="form-input" id="ic-${idx}" placeholder="e.g. 900101-14-5678">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" id="email-${idx}" type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Current Location</label>
+              <input class="form-input" id="loc-${idx}" placeholder="e.g. Shah Alam, Selangor">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Experience</label>
+              <input class="form-input" id="exp-${idx}" placeholder="e.g. 3 years security guard">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-cancel" onclick="toggleForm(${idx})">Cancel</button>
+            <button class="btn-submit" id="submit-${idx}" onclick="submitApplication(${idx}, '${job.id}', '${job.guard_type || 'local'}')">Submit Application</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error('Failed to load jobs:', err);
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠️</div>
+        <h3>Could Not Load Positions</h3>
+        <p>Please try again later or contact us directly at <a href="mailto:business.vshield@gmail.com">business.vshield@gmail.com</a>.</p>
+      </div>`;
+  }
+}
+
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function toggleForm(idx) {
+  const form = document.getElementById(`form-${idx}`);
+  form.classList.toggle('open');
+}
+
+async function submitApplication(idx, jobId, guardType) {
+  const name = document.getElementById(`name-${idx}`).value.trim();
+  const phone = document.getElementById(`phone-${idx}`).value.trim();
+  const ic = document.getElementById(`ic-${idx}`).value.trim();
+  const email = document.getElementById(`email-${idx}`).value.trim();
+  const loc = document.getElementById(`loc-${idx}`).value.trim();
+  const exp = document.getElementById(`exp-${idx}`).value.trim();
+
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+
+  const submitBtn = document.getElementById(`submit-${idx}`);
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  try {
+    const id = 'APP' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/applicants`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({
+        id,
+        tenant_id: 'vshield',
+        job_posting_id: jobId,
+        name,
+        phone,
+        ic_number: ic,
+        email,
+        current_location: loc,
+        experience: exp,
+        guard_type: guardType,
+        status: 'applied',
+        notes: 'Applied via website careers page',
+      })
+    });
+
+    if (res.ok) {
+      const form = document.getElementById(`form-${idx}`);
+      form.innerHTML = `<div class="form-success">✓ Application submitted! We'll contact you soon at ${phone}.</div>`;
+    } else {
+      const err = await res.json();
+      console.error('Submit error:', err);
+      alert('Something went wrong. Please try again or contact us directly.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Application';
+    }
+  } catch (err) {
+    console.error('Submit error:', err);
+    alert('Network error. Please try again later.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Application';
+  }
+}
+
+// Load on page ready
+loadJobs();
+</script>
+</body>
+</html>
