@@ -195,6 +195,10 @@ async function loadJobs() {
         </button>
         <div class="apply-form" id="form-${idx}">
           <div class="form-grid">
+            <div class="form-group" style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;pointer-events:none" aria-hidden="true">
+              <label>Company website</label>
+              <input class="form-input" id="hp-${idx}" tabindex="-1" autocomplete="off">
+            </div>
             <div class="form-group">
               <label class="form-label">Full Name *</label>
               <input class="form-input" id="name-${idx}" placeholder="Your full name" required>
@@ -220,6 +224,7 @@ async function loadJobs() {
               <input class="form-input" id="exp-${idx}" placeholder="e.g. 3 years security guard">
             </div>
           </div>
+          <input type="hidden" id="ts-${idx}" value="${Date.now()}">
           <div class="form-actions">
             <button class="btn-cancel" onclick="toggleForm(${idx})">Cancel</button>
             <button class="btn-submit" id="submit-${idx}" onclick="submitApplication(${idx}, '${job.id}', '${job.guard_type || 'local'}')">Submit Application</button>
@@ -250,7 +255,32 @@ function toggleForm(idx) {
   form.classList.toggle('open');
 }
 
+// Rate limiter: max 3 submissions per session
+let submitCount = 0;
+const MAX_SUBMITS = 3;
+
 async function submitApplication(idx, jobId, guardType) {
+  // Anti-spam: honeypot check (bots auto-fill hidden fields)
+  const honeypot = document.getElementById(`hp-${idx}`);
+  if (honeypot && honeypot.value) { 
+    const form = document.getElementById(`form-${idx}`);
+    form.innerHTML = `<div class="form-success">✓ Application submitted! We'll contact you soon.</div>`;
+    return; // Silently reject — don't tell bot it failed
+  }
+
+  // Anti-spam: time check (form must be open at least 3 seconds)
+  const formTs = parseInt(document.getElementById(`ts-${idx}`).value || '0');
+  if (Date.now() - formTs < 3000) {
+    alert('Please take a moment to fill in the form properly.');
+    return;
+  }
+
+  // Anti-spam: rate limit per session
+  if (submitCount >= MAX_SUBMITS) {
+    alert('You have reached the maximum number of applications. Please contact us directly at business.vshield@gmail.com');
+    return;
+  }
+
   const name = document.getElementById(`name-${idx}`).value.trim();
   const phone = document.getElementById(`phone-${idx}`).value.trim();
   const ic = document.getElementById(`ic-${idx}`).value.trim();
@@ -260,6 +290,13 @@ async function submitApplication(idx, jobId, guardType) {
 
   if (!name || !phone) {
     alert('Please enter your name and phone number.');
+    return;
+  }
+
+  // Basic phone validation (Malaysian format)
+  const phoneClean = phone.replace(/[\s\-]/g, '');
+  if (phoneClean.length < 9 || phoneClean.length > 14) {
+    alert('Please enter a valid phone number.');
     return;
   }
 
@@ -294,8 +331,9 @@ async function submitApplication(idx, jobId, guardType) {
     });
 
     if (res.ok) {
+      submitCount++;
       const form = document.getElementById(`form-${idx}`);
-      form.innerHTML = `<div class="form-success">✓ Application submitted! We'll contact you soon at ${phone}.</div>`;
+      form.innerHTML = `<div class="form-success">✓ Application submitted! We'll contact you soon at ${escHtml(phone)}.</div>`;
     } else {
       const err = await res.json();
       console.error('Submit error:', err);
